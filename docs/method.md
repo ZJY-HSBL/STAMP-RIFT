@@ -11,13 +11,13 @@ The present implementation treats STAMP as an **indicator-construction methodolo
 Different HFEs may contain different numbers of values. Let
 
 $$
-u_{ij}=4\operatorname{Var}(h_{ij}).
+u_{ij}=4\mathrm{Var}(h_{ij}).
 $$
 
 Because values lie in $[0,1]$, $u_{ij}\in[0,1]$. Given base risk preference $r_0\in[-1,1]$ and hesitation sensitivity $\beta\ge0$, define
 
 $$
-r_{ij}=\operatorname{clip}(r_0+\beta u_{ij},-1,1)
+r_{ij}=\mathrm{clip}(r_0+\beta u_{ij},-1,1)
 $$
 
 and
@@ -47,7 +47,7 @@ $$
 and the compact monotonicity condition
 
 $$
-m_i+\sum_{j:m_{ij}<0}m_{ij}\ge0
+m_i+\sum_{j:m_{ij}\lt 0}m_{ij}\ge0
 $$
 
 holds for every criterion. The resulting 2-additive capacity is normalized automatically because the Shapley vector sums to one.
@@ -57,7 +57,7 @@ holds for every criterion. The resulting 2-additive capacity is normalized autom
 For non-negative vector $x$,
 
 $$
-C_\mu(x)=\sum_i m_i x_i+\sum_{i<j}m_{ij}\min(x_i,x_j).
+C_\mu(x)=\sum_i m_i x_i+\sum_{i\lt j}m_{ij}\min(x_i,x_j).
 $$
 
 This avoids enumeration of $2^n$ subsets and remains practical for dozens of criteria.
@@ -85,6 +85,6 @@ The robustness module perturbs HFE memberships, importance weights, association 
 - mean score and 95% empirical score interval;
 - mean rank;
 - rank acceptability $P(R_i=r)$;
-- pairwise superiority $P(S_i>S_j)$.
+- pairwise superiority $P(S_i\gt S_j)$.
 
 These quantities describe ranking stability rather than replacing domain validation.

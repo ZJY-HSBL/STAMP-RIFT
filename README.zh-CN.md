@@ -28,13 +28,13 @@
 对于犹豫模糊元素 $h_{ij}$，定义犹豫度：
 
 $$
-u_{ij}=4\operatorname{Var}(h_{ij}),\qquad u_{ij}\in[0,1].
+u_{ij}=4\mathrm{Var}(h_{ij}),\qquad u_{ij}\in[0,1].
 $$
 
 设基础风险偏好为 $r_0$，犹豫敏感系数为 $\beta$，则
 
 $$
-r_{ij}=\operatorname{clip}(r_0+\beta u_{ij},-1,1),
+r_{ij}=\mathrm{clip}(r_0+\beta u_{ij},-1,1),
 \qquad
 \theta_{ij}=\frac{1-r_{ij}}{2}.
 $$
@@ -50,7 +50,7 @@ $$
 对于 2-可加容量，使用 Möbius 系数 $m_i$ 与 $m_{ij}$，聚合形式为：
 
 $$
-C_\mu(x)=\sum_i m_i x_i+\sum_{i<j}m_{ij}\min(x_i,x_j).
+C_\mu(x)=\sum_i m_i x_i+\sum_{i\lt j}m_{ij}\min(x_i,x_j).
 $$
 
 其中正的 $m_{ij}$ 表示互补关系，负的 $m_{ij}$ 表示替代或冗余关系。代码通过阈值稀疏化与单调性缩放形成可解释的交互结构，并保持目标 Shapley 重要度。
