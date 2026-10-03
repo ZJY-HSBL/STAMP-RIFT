@@ -1,0 +1,67 @@
+{
+  "provenance": "Replace this text with the source and collection protocol of your real case study.",
+  "alternatives": [
+    "candidate_1",
+    "candidate_2",
+    "candidate_3"
+  ],
+  "criteria": [
+    "criterion_1",
+    "criterion_2",
+    "criterion_3"
+  ],
+  "importance": [
+    0.34,
+    0.33,
+    0.33
+  ],
+  "benefit": [
+    true,
+    true,
+    true
+  ],
+  "matrix": [
+    [
+      [
+        0.6,
+        0.7
+      ],
+      [
+        0.5,
+        0.6,
+        0.7
+      ],
+      [
+        0.7
+      ]
+    ],
+    [
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.6,
+        0.7
+      ],
+      [
+        0.6,
+        0.7
+      ]
+    ],
+    [
+      [
+        0.5,
+        0.6
+      ],
+      [
+        0.7,
+        0.8
+      ],
+      [
+        0.8,
+        0.9
+      ]
+    ]
+  ]
+}

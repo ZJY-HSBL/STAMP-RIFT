@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this research software, please cite this repository."
+title: "STAMP-Based Risk-Adaptive Hesitant Fuzzy Interactive TOPSIS"
+type: software
+authors:
+  - family-names: "ZJY-HSBL"
+repository-code: "https://github.com/ZJY-HSBL/stamp-hf-correlation-topsis"
+version: 0.3.0
+date-released: 2026-10-03
+license: MIT
