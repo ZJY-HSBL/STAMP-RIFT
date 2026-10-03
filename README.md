@@ -1,45 +1,128 @@
-# STAMP and HF multi-attribute correlation TOPSIS
+# STAMP-Based Risk-Adaptive Hesitant Fuzzy Interactive TOPSIS
 
-## 快速运行
+[中文说明](README.zh-CN.md)
 
-Python 3.10 或以上，在项目根目录执行：
+This repository implements an integrated multi-attribute decision framework for competency evaluation in complex emergency-management environments. The research combines systems-theoretic indicator construction, hesitant fuzzy information modeling, sparse criterion interaction learning, and robust TOPSIS ranking within one computational pipeline.
+
+The framework contains four tightly coupled layers:
+
+1. **STAMP-informed indicator construction** for structuring competency criteria from safety constraints, control structures, control actions, and feedback mechanisms.
+2. **Risk-adaptive hesitant fuzzy completion**, where each HFE receives a cell-specific completion coefficient according to its hesitation and the decision maker's risk preference.
+3. **Sparse 2-additive interaction capacity**, which preserves a target Shapley importance vector while identifying a parsimonious set of complementary or substitutive criterion interactions.
+4. **Robust TOPSIS ranking**, including Monte Carlo uncertainty propagation, score intervals, rank acceptability, mean rank, and pairwise superiority probabilities.
+
+## Research contributions
+
+The project focuses on the following methodological contributions:
+
+- a **cell-specific risk-adaptive HFE completion mechanism** that links local hesitation to decision risk preference;
+- a **sparse interaction construction strategy** for retaining interpretable criterion complementarity and redundancy while controlling interaction density;
+- an **efficient 2-additive Choquet aggregation implementation** suitable for medium- and high-dimensional criterion systems;
+- a **robust-ranking layer** that propagates uncertainty in memberships, importance weights, risk parameters, and interaction structure instead of reporting only one deterministic order;
+- a unified research workflow that connects **STAMP-based indicator modeling, hesitant fuzzy representation, interaction-aware aggregation, TOPSIS evaluation, and robustness analysis**.
+
+The bundled dataset is **synthetic** and is included to verify the implementation and demonstrate the complete computational workflow. For a domain application, replace it with independently collected case data and a documented expert-evaluation protocol.
+
+## Method summary
+
+For an HFE \(h_{ij}\), the hesitation index is defined as
+
+\[
+u_{ij}=4\operatorname{Var}(h_{ij}), \qquad u_{ij}\in[0,1].
+\]
+
+The effective risk preference and adaptive completion coefficient are
+
+\[
+r_{ij}=\operatorname{clip}(r_0+\beta u_{ij},-1,1),
+\qquad
+\theta_{ij}=\frac{1-r_{ij}}{2}.
+\]
+
+The padding value becomes
+
+\[
+p_{ij}=\theta_{ij}\max(h_{ij})+(1-\theta_{ij})\min(h_{ij}).
+\]
+
+For a 2-additive capacity with Möbius coefficients \(m_i\) and \(m_{ij}\), the aggregation is
+
+\[
+C_\mu(x)=\sum_i m_i x_i+\sum_{i<j}m_{ij}\min(x_i,x_j).
+\]
+
+The implementation constructs sparse pair interactions from a criterion-association matrix and scales them to satisfy monotonicity while preserving the requested Shapley importance vector.
+
+## Quick start
 
 ```bash
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
-python run.py audit
 python run.py demo
 ```
 
-`audit` 核验公开表格，输出 JSON 与中文报告。`demo` 固定种子生成完整 4×26 模拟矩阵，输出排序、中间矩阵、风险敏感性曲线和基线比较。所有模拟输出有明确标记。
+Evaluate your own case:
 
-Windows 指定环境：
+```bash
+python run.py evaluate \
+  --input data/case_template.json \
+  --output results/my_case \
+  --risk 0.25 \
+  --beta 0.5 \
+  --interaction-strength 0.15 \
+  --interaction-threshold 0.25 \
+  --robust 1000
+```
+
+Windows example:
 
 ```powershell
 D:/software/miniconda3/envs/myenv/python.exe -m pip install -r requirements.txt
+D:/software/miniconda3/envs/myenv/python.exe -m unittest discover -s tests -v
 D:/software/miniconda3/envs/myenv/python.exe run.py demo
 ```
 
-## 实际数据
+## Repository structure
 
-复制 `data/paper_full_template.json`，补齐 `null` 单元格，每格是 [0,1] 内非空数值数组，然后运行：
+```text
+stamp_hf/
+  hesitant.py      adaptive HFE completion and validation
+  capacity.py      lambda and 2-additive fuzzy capacities
+  interaction.py   association estimation and sparse interaction construction
+  core.py          ideal points, distances and TOPSIS evaluation
+  robustness.py    Monte Carlo uncertainty propagation
 
-```bash
-python run.py evaluate --input data/your_case.json --theta 0 --output results/your_case
+data/
+  synthetic_case.json  transparent synthetic demonstration
+  case_template.json   domain-study input template
+experiments/
+  exp_ablation.py
+  exp_robustness.py
+tests/
+docs/
+results/
 ```
 
-`matrix` 为方案×指标×不定长隶属度；`singletons` 为单指标模糊测度；`benefit` 为各指标是否效益型的布尔列表；`alternatives` 为唯一方案编号。指标与测度次序必须相同。缺失值与非法输入会被拒绝。
+## Research validation
 
-## 项目结构
+Run the ablation study:
 
-|文件|功能|
-|---|---|
-|`stamp_hf/core.py`|风险补齐、成本转换、理想解、距离、贴近度、独立 RMS 与 VIKOR 风格基线|
-|`stamp_hf/capacity.py`|λ 求根、子集测度、最大分解积分、二可加模型、精确小规模 LP|
-|`run.py`|数据核验、模拟实验、自定义数据评价、CSV/JSON/PNG 导出|
-|`data/indicators.json`|26 项指标与三类 STAMP 维度|
-|`tests/test_model.py`|数值测试、LP 交叉验证与边界测试|
-|`docs/method.md`|公式映射、修正及复现边界|
-|`results/`|实际运行得到的核验与模拟实验输出|
+```bash
+python experiments/exp_ablation.py
+```
 
-STAMP 是定性建模过程，此处提供结构化指标，不声称自动从事故描述生成专家指标。
+Run a 1000-iteration robustness study:
+
+```bash
+python experiments/exp_robustness.py
+```
+
+The validation workflow supports fixed-vs-adaptive completion comparison, interaction-vs-no-interaction comparison, alternative aggregation models, parameter sensitivity, robustness analysis, rank stability, and computational scalability analysis.
+
+For a domain study, the input should additionally document the indicator system, expert-selection rules, elicitation scale, HFE construction process, criterion directions, importance derivation, association estimation, and robustness parameters.
+
+See [docs/method.md](docs/method.md), [docs/research_intro_en.md](docs/research_intro_en.md), and [docs/research_validation.md](docs/research_validation.md).
+
+## License
+
+MIT.
