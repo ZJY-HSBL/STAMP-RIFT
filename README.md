@@ -1,4 +1,5 @@
-# STAMP-Based Risk-Adaptive Hesitant Fuzzy Interactive TOPSIS
+# STAMP-RIFT
+## STAMP-Informed Risk-Adaptive Interaction-Aware Fuzzy TOPSIS
 
 [中文说明](README.zh-CN.md)
 
