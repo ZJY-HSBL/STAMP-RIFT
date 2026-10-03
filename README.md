@@ -25,31 +25,31 @@ The bundled dataset is **synthetic** and is included to verify the implementatio
 
 ## Method summary
 
-For an HFE \(h_{ij}\), the hesitation index is defined as
+For an HFE $h_{ij}$, the hesitation index is defined as
 
-\[
+$$
 u_{ij}=4\operatorname{Var}(h_{ij}), \qquad u_{ij}\in[0,1].
-\]
+$$
 
 The effective risk preference and adaptive completion coefficient are
 
-\[
+$$
 r_{ij}=\operatorname{clip}(r_0+\beta u_{ij},-1,1),
 \qquad
 \theta_{ij}=\frac{1-r_{ij}}{2}.
-\]
+$$
 
 The padding value becomes
 
-\[
+$$
 p_{ij}=\theta_{ij}\max(h_{ij})+(1-\theta_{ij})\min(h_{ij}).
-\]
+$$
 
-For a 2-additive capacity with Möbius coefficients \(m_i\) and \(m_{ij}\), the aggregation is
+For a 2-additive capacity with Möbius coefficients $m_i$ and $m_{ij}$, the aggregation is
 
-\[
+$$
 C_\mu(x)=\sum_i m_i x_i+\sum_{i<j}m_{ij}\min(x_i,x_j).
-\]
+$$
 
 The implementation constructs sparse pair interactions from a criterion-association matrix and scales them to satisfy monotonicity while preserving the requested Shapley importance vector.
 
