@@ -57,7 +57,7 @@ The implementation constructs sparse pair interactions from a criterion-associat
 ## Quick start
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install -e .
 python -m unittest discover -s tests -v
 python run.py demo
 ```
@@ -78,7 +78,7 @@ python run.py evaluate \
 Windows example:
 
 ```powershell
-D:/software/miniconda3/envs/myenv/python.exe -m pip install -r requirements.txt
+D:/software/miniconda3/envs/myenv/python.exe -m pip install -e .
 D:/software/miniconda3/envs/myenv/python.exe -m unittest discover -s tests -v
 D:/software/miniconda3/envs/myenv/python.exe run.py demo
 ```
